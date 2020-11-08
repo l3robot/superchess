@@ -29,11 +29,31 @@ def main_jupyter_loop(player1, player2, gamelength=-1, delay=1):
         # Player1 move.
         p1_move = player1.get_move(board)
         board.push(p1_move)
+        if board.is_game_over():
+            res = board.result().split('-')[0]
+            if res == '1/2':
+                print('The game is a draw.')
+            elif res == '1':
+                print('White wins.')
+            else:
+                print('black wins')
+            break
+        # Sleep.
+        time.sleep(delay)
         # Render.
         render_in_jupyter(board)
         # Player2 move.
         p2_move = player2.get_move(board)
         board.push(p2_move)
+        if board.is_game_over():
+            res = board.result().split('-')[0]
+            if res == '1/2':
+                print('The game is a draw.')
+            elif res == '1':
+                print('White wins.')
+            else:
+                print('black wins')
+            break
         # Sleep.
         time.sleep(delay)
         count += 1
