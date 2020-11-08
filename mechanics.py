@@ -19,13 +19,14 @@ def render_in_jupyter(board):
     )
 
 
-def main_jupyter_loop(player1, player2, gamelength=-1, delay=1):
+def main_jupyter_loop(player1, player2, gamelength=-1, delay=1, render=True):
     """Create a very simple game loop for jupyter notebook."""
     board = chess.Board() # Create a new board.
     count = 0
     while count != gamelength:
         # Render.
-        render_in_jupyter(board)
+        if render:
+            render_in_jupyter(board)
         # Player1 move.
         p1_move = player1.get_move(board)
         board.push(p1_move)
@@ -39,9 +40,11 @@ def main_jupyter_loop(player1, player2, gamelength=-1, delay=1):
                 print('black wins')
             break
         # Sleep.
-        time.sleep(delay)
+        if render:
+            time.sleep(delay)
         # Render.
-        render_in_jupyter(board)
+        if render:
+            render_in_jupyter(board)
         # Player2 move.
         p2_move = player2.get_move(board)
         board.push(p2_move)
@@ -55,5 +58,7 @@ def main_jupyter_loop(player1, player2, gamelength=-1, delay=1):
                 print('black wins')
             break
         # Sleep.
-        time.sleep(delay)
+        if render:
+            time.sleep(delay)
         count += 1
+    return board
