@@ -2,7 +2,7 @@
 
 import random
 
-import numpy as np
+import math
 import chess
 
 from .player import Player
@@ -28,14 +28,19 @@ def score_board(board):
     if board.is_checkmate():
         score -= 1000
     turn_mobility = board.legal_moves.count()
+    board.turn = False if True else True
     other_mobility = board.mirror().legal_moves.count()
+    board.turn = False if True else True
     score += 0.1 * (turn_mobility - other_mobility)
+
+    if rel_score == False:
+        score = score * (1 if board.turn else -1)
     return score
 
 
 def rollout(board, depth=3, reduce="max"):
     board_copy = board.copy()
-    best_score = 0 if reduce == "max" else np.inf
+    best_score = 0 if reduce == "max" else math.inf
     mobility = board_copy.legal_moves.count()
     if not mobility:
         sign = -1 if reduce == "max" else 1
