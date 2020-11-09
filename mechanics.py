@@ -9,27 +9,45 @@ from IPython.display import SVG
 import chess
 from chess import svg
 
+class NoDisplay():
 
-def render_in_jupyter(board):
-    """This function clear and render the board in a jupyter cell
-    output."""
-    display.clear_output(wait=True)
-    display.display(
-        SVG(svg.board(board, size=300, lastmove=board.move_stack[-1] if board.move_stack != [] else None))
-    )
+    def render(self, board):
+        pass
 
+class JupyterDisplay():
 
-def main_jupyter_loop(player1, player2, gamelength=-1, delay=1, render=True):
-    """Create a very simple game loop for jupyter notebook."""
-    board = chess.Board() # Create a new board.
+    def __init__(self, delay):
+        self.delay = delay
+
+    def render(self, board):
+        """This function clear and render the board in a jupyter cell
+        output."""
+        display.clear_output(wait=True)
+        display.display(
+            SVG(svg.board(board, size=400, lastmove=board.move_stack[-1] if board.move_stack != [] else None))
+        )
+        time.sleep(self.delay)
+
+def create_gui(name, delay):
+    if name is None:
+        return NoDisplay()
+    elif name.lower() == 'jupyter':
+        return JupyterDisplay(delay)
+
+def play_game(player1, player2, board=None, gamelength=-1, delay=0, gui='jupyter'):
+    """Play a game and return end board. Can render to different GUIs."""
+    if board is None:
+        board = chess.Board() # Create a new board.
+    gui = create_gui(gui, delay)
+    gui.render(board)
+
     count = 0
     while count != gamelength:
-        # Render.
-        if render:
-            render_in_jupyter(board)
+
         # Player1 move.
         p1_move = player1.get_move(board)
         board.push(p1_move)
+        gui.render(board)
         if board.is_game_over():
             res = board.result().split('-')[0]
             if res == '1/2':
@@ -39,15 +57,11 @@ def main_jupyter_loop(player1, player2, gamelength=-1, delay=1, render=True):
             else:
                 print('black wins')
             break
-        # Sleep.
-        if render:
-            time.sleep(delay)
-        # Render.
-        if render:
-            render_in_jupyter(board)
+
         # Player2 move.
         p2_move = player2.get_move(board)
         board.push(p2_move)
+        gui.render(board)
         if board.is_game_over():
             res = board.result().split('-')[0]
             if res == '1/2':
@@ -57,8 +71,6 @@ def main_jupyter_loop(player1, player2, gamelength=-1, delay=1, render=True):
             else:
                 print('black wins')
             break
-        # Sleep.
-        if render:
-            time.sleep(delay)
+
         count += 1
     return board
