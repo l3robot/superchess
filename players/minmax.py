@@ -18,7 +18,14 @@ VAL_DICT = {
 }
 
 
-def score_board(board):
+def score_board(board, rel_score=True):
+    """Score the current board position.
+
+    With rel_score=True, score relative to who's turn it is.
+    Score is positive if the player whose turn it is is winning, and negative otherwise.
+
+    With rel_score=False, use absolute score.
+    Score is positive if white player is winning, and negative if black player is winning."""
     score = 0
     for piece in board.piece_map().values():
         if piece.color == board.turn:
