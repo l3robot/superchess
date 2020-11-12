@@ -1,7 +1,7 @@
 """This module defines the players (humans or algorithms) that can participate in chess games."""
 from abc import ABC, abstractmethod
 import random
-from superchess.search import rollout
+from superchess.search import minmax_treesearch, alphabeta_treesearch
 
 class Player(ABC):
 	"""Abstract class that defines the player interface."""
@@ -42,5 +42,16 @@ class MinMaxPlayer(Player):
 		self.rollout_depth = rollout_depth
 
 	def get_move(self, board):
-		best_move = rollout(board, self.rollout_depth)[-1]
+		_, best_move = minmax_treesearch(board, self.rollout_depth)
 		return best_move
+
+class AlphaBetaPlayer(Player):
+	"""Defines a minmax player that does tree-search with alpha-beta pruning."""
+
+	def __init__(self, rollout_depth=3, use_mobility=False):
+		self.rollout_depth = rollout_depth
+		self.use_mobility = use_mobility
+
+	def get_move(self, board):
+		_, _, best_moves = alphabeta_treesearch(board, self.rollout_depth, self.use_mobility)
+		return random.choice(best_moves)
