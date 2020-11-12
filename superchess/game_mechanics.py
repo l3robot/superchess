@@ -8,6 +8,7 @@ from IPython.display import SVG
 
 import chess
 from chess import svg
+from superchess.players import HumanPlayer, RandomPlayer, MinMaxPlayer, AlphaBetaPlayer
 
 class NoDisplay():
 
@@ -34,7 +35,7 @@ def create_gui(name, delay):
     elif name.lower() == 'jupyter':
         return JupyterDisplay(delay)
 
-def play_game(player1, player2, board=None, gamelength=-1, delay=0, gui='jupyter'):
+def game_loop(player1, player2, board=None, gamelength=-1, delay=0, gui='jupyter'):
     """Play a game and return end board. Can render to different GUIs."""
     if board is None:
         board = chess.Board() # Create a new board.
@@ -74,3 +75,19 @@ def play_game(player1, player2, board=None, gamelength=-1, delay=0, gui='jupyter
 
         count += 1
     return board
+
+def play_game(opponent='alphabeta', color='white'):
+    player1 = HumanPlayer()
+    if opponent == 'random':
+        player2 = RandomPlayer()
+    elif opponent == 'minmax':
+        player2 = MinMaxPlayer()
+    elif opponent == 'alphabeta':
+        player2 = AlphaBetaPlayer()
+    else:
+        raise ValueError("opponent must be one of 'random', 'minmax', or 'alphabeta'.")
+
+    if color=="white":
+        game_loop(player1, player2)
+    else:
+        game_loop(player2, player1)

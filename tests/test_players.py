@@ -1,7 +1,7 @@
 import unittest
 import chess
 from superchess.players import MinMaxPlayer, AlphaBetaPlayer
-from superchess.game_mechanics import play_game
+from superchess.game_mechanics import game_loop
 
 class TestMinMaxPlayer(unittest.TestCase):
 	"""This suite tests the MinMaxPlayer."""
@@ -18,7 +18,7 @@ class TestMinMaxPlayer(unittest.TestCase):
 
 	def test_checkmatein2_rooks(self):
 		checkmatein2board = chess.Board(fen='8/k7/6R1/8/8/8/8/K6R w')
-		endboard = play_game(self.minmax3, self.minmax1, checkmatein2board, gamelength=2, delay=1, gui=None)
+		endboard = game_loop(self.minmax3, self.minmax1, checkmatein2board, gamelength=2, delay=1, gui=None)
 		self.assertTrue(endboard.is_game_over() == True)
 
 	def test_minmax3_finds_quickest_checkmate(self):
@@ -47,7 +47,7 @@ class TestAlphaBetaPlayer(unittest.TestCase):
 
 	def test_checkmatein2_rooks(self):
 		checkmatein2board = chess.Board(fen='8/k7/6R1/8/8/8/8/K6R w')
-		endboard = play_game(self.alphabeta3, self.alphabeta1, checkmatein2board, gamelength=2, delay=1, gui=None)
+		endboard = game_loop(self.alphabeta3, self.alphabeta1, checkmatein2board, gamelength=2, delay=1, gui=None)
 		self.assertTrue(endboard.is_game_over() == True)
 
 

@@ -42,8 +42,8 @@ class MinMaxPlayer(Player):
 		self.rollout_depth = rollout_depth
 
 	def get_move(self, board):
-		_, best_move = minmax_treesearch(board, self.rollout_depth)
-		return best_move
+		_, _, best_moves = minmax_treesearch(board, self.rollout_depth)
+		return random.choice(best_moves)
 
 class AlphaBetaPlayer(Player):
 	"""Defines a minmax player that does tree-search with alpha-beta pruning."""
