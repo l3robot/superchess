@@ -19,6 +19,7 @@ To play a game against an alphabeta of depth3 opponent, simply type
 ```
 python3 examples/qtgui.py
 ```
+The pieces need to be dragged (click mouse on the piece's current square, and lift mouse button on goal square).
 
 If for any reason the gui experiences problems, once can also use a simpler keyboard-based input method jupyter notebooks (see the [gui](#gui) section for more info). First [download jupyter](https://jupyter.org/install), then open the examples/play_against_computer.ipynb notebook:
 ```
