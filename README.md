@@ -15,7 +15,12 @@ pip install .
 
 #### 2. Playing
 
-Playing happens in jupyter notebooks. First [download jupyter](https://jupyter.org/install), then open the examples/play_against_computer.ipynb notebook:
+To play a game against an alphabeta of depth3 opponent, simply type
+```
+python3 examples/qtgui.py
+```
+
+If for any reason the gui experiences problems, once can also use a simpler keyboard-based input method jupyter notebooks (see the [gui](#gui) section for more info). First [download jupyter](https://jupyter.org/install), then open the examples/play_against_computer.ipynb notebook:
 ```
 cd examples
 jupyter notebook
@@ -51,7 +56,11 @@ python3 -m unittest
 
 #### GUI
 
-So far the only gui available is IPython's [Display](https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html) function. We use [python-chess](https://python-chess.readthedocs.io/en/latest/) as a frontend, which generates svg images. Display is then used to show these svg images.
+We use [python-chess](https://python-chess.readthedocs.io/en/latest/) as a frontend, which generates svg images, and so the GUI needs to show this svg image and then ask the user for move input. There are two GUIs implemented, one for which the input is click-based and another for which it is keyboard-based.
+
+The mouse/click-based GUI is the main one, and is implemented using [PySide2](https://wiki.qt.io/Qt_for_Python). The code can be found in `examples/qtgui.py`.
+
+The keyboard-based gui uses IPython's [Display](https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.html) function, and needs to be ran inside a jupyter notebook.
 
 #### alpha-beta pruning misses checkmates in 1!
 
