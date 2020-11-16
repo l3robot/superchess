@@ -21,13 +21,13 @@ class JupyterDisplay():
         self.delay = delay
 
     def render(self, board):
-        """This function clear and render the board in a jupyter cell
-        output."""
+        """This function clears and renders the board in a jupyter cell output."""
         display.clear_output(wait=True)
         display.display(
             SVG(svg.board(board, size=400, lastmove=board.move_stack[-1] if board.move_stack != [] else None))
         )
         time.sleep(self.delay)
+
 
 def create_gui(name, delay):
     if name is None:
