@@ -10,7 +10,7 @@ There's only two simple steps in order to play against our chess engine.
 
 Installation is as simple as
 ```
-pip install .
+pip install -r requirements.txt .
 ```
 
 #### 2. Playing
@@ -44,7 +44,7 @@ Moves have to be entered manually, using either of
 
 As a developer it's better to install superchess using
 ```
-pip install -e .
+pip install -e -r requirements.txt .
 ```
 This will keep track of the changes you make to files, and you won't need to reinstall superchess after every change.
 
